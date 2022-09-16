@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+<p>Vous êtes connecté !</p>
+<p>
+  Les reviews : {% for review in reviews %}
+  <li>{{ review.headline }}</li>
+  <li>{{ review.body }}</li>
+  <li>{{ review.user }}</li>
+  <li>{{ review.ticket.time_created }}</li>
+  <li>{{ review.ticket.image }}</li>
+  {% endfor %} Les tickets : {% for ticket in tickets %}
+  <li>{{ ticket.title }}</li>
+  <li>{{ ticket.description }}</li>
+  <li>{{ ticket.user }}</li>
+  <li><img src="http://127.0.0.1:8000/media/{{ ticket.image }}" /></li>
+  <li>{{ ticket.time_created }}</li>
+  {% endfor %}
+</p>
+{% endblock content %}
