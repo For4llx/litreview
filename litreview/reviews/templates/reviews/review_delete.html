@@ -1,0 +1,8 @@
+<h1>Supprimer</h1>
+
+<p>Etes-vous sûr de vouloir supprimer le post : {{ review.headline }} ?</p>
+
+<form action="" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Supprimer" />
+</form>

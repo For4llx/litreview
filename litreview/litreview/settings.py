@@ -130,6 +130,8 @@ AUTH_USER_MODEL = 'authentification.User'
 
 LOGIN_URL = 'login'
 
+LOGIN_REDIRECT_URL = 'feed'
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = 'media/'

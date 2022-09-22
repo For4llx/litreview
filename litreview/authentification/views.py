@@ -26,7 +26,7 @@ class LoginPage(View):
                 password= form.cleaned_data['password'])
             if user:
                 login(request, user)
-                return redirect('flow')
+                return redirect('feed')
             else:
                 message = 'identifiants invalides.'
         return render(

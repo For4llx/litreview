@@ -22,11 +22,18 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('signup/', authentification.views.signup_page, name='signup'),
     path('', authentification.views.LoginPage.as_view(), name='login'),
     path('logout/', authentification.views.logout_user, name='logout'),
-    path('flow/', reviews.views.flow, name='flow'),
-    path('create-ticket/', reviews.views.createTicket, name='create_ticket'),
-    path('signup/', authentification.views.signup_page, name='signup'),
+    path('feed/', reviews.views.feed, name='feed'),
+    path('subscription/', reviews.views.subscription, name='subscription'),
+    path('post/', reviews.views.posts, name='posts'),
+    path('post/ticket/create', reviews.views.ticket_create, name='ticket_create'),
+    path('post/ticket/update/<int:id>', reviews.views.ticket_update, name='ticket_update'),
+    path('post/ticket/delete/<int:id>', reviews.views.ticket_delete, name='ticket_delete'),
+    path('post/review/create', reviews.views.review_create, name='review_create'),
+    path('post/review/update/<int:id>', reviews.views.review_update, name='review_update'),
+    path('post/review/delete/<int:id>', reviews.views.review_delete, name='review_delete'),
 ]
 
 if settings.DEBUG:

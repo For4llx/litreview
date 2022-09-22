@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block content %}
+<main class="subscription">
+  <section>
+    <h2>Suivre d'autres utilisateurs</h2>
+    <form method="post">
+      <input placeholder="Nom d'utilisateur" />
+      <button class="button">Ajouter</button>
+    </form>
+  </section>
+  <section>
+    <h2>Abonnements</h2>
+    {% if request.user %}
+    <ul>
+      {% for subscription in subscriptions %}
+      <li>
+        <div>
+          <p>{{ subscription.followed_user }}</p>
+          <button class="button">Se Désabonner</button>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Vous n'avez pas encore d'abonnements</p>
+    {% endif %}
+  </section>
+  <section>
+    <h2>Abonnés</h2>
+    {% if request.user %}
+    <ul>
+      {% for subscriber in subscribers %}
+      <li>
+        <p>{{ subscriber.user }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Vous n'avez pas encore d'abonnés</p>
+    {% endif %}
+  </section>
+</main>
+{% endblock content %}
