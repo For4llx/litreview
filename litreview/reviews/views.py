@@ -44,8 +44,8 @@ def subscription(request):
 
     if request.method == 'POST':
         search = request.POST['user']
-        followed_user = User.objects.filter(username = search)
-        new_subscription = UserFollows(user = request.user, followed_user = followed_user[0])
+        followed_user = User.objects.get(username = search)
+        new_subscription = UserFollows(user = request.user, followed_user = followed_user)
         new_subscription.save()
         redirect('subscription')
 
@@ -61,7 +61,7 @@ def subscription_delete(request, id):
     subscription = UserFollows.objects.get(id=id) # pylint: disable=maybe-no-member
     if request.method == 'POST':
         subscription.delete()
-        return redirect('posts')
+        return redirect('subscription')
     context = {'subscription': subscription}
     return render(request, 'reviews/subscription_delete.html', context)
 
@@ -109,9 +109,9 @@ def ticket_delete(request, id):
     return render(request, 'reviews/ticket_delete.html', context)
 
 @login_required
-def review_create(request, id):
+def review_create(request, id=None):
     if id:
-        ticket = Ticket.objects.get(id=id)
+        ticket = Ticket.objects.get(id=id) # pylint: disable=maybe-no-member
         review_form = ReviewForm()
         if request.method == 'POST':
             review_form = ReviewForm(request.POST)
