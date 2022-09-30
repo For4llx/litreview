@@ -12,11 +12,10 @@
   </ul>
   <section>
     {% for post in posts %}
-    <!---->
     {% if post|model_type == 'Review' %}
     <article>
       <div>
-        {% if request.user %}
+        {% if request.user == post.user %}
         <p>Vous avez publié une critique</p>
         {% else %}
         <p>{{ post.user }} a publié une critique</p>
@@ -35,18 +34,20 @@
         <img src="http://127.0.0.1:8000/media/{{ post.ticket.image }}" />
       </div>
       <div>
+        {% if request.user == post.user %}
         <a href="{% url 'review_update' post.id %}" class="button">
           Modifier
         </a>
         <a href="{% url 'review_delete' post.id %}" class="button">
           Supprimer
         </a>
+        {% endif %}
       </div>
     </article>
     {% elif post|model_type == 'Ticket' %}
     <article>
       <div>
-        {% if request.user %}
+        {% if request.user == post.user %}
         <p>Vous avez demandé une critique</p>
         {% else %}
         <p>{{ post.user }} a demandé une critique</p>
@@ -56,7 +57,7 @@
       <h2>{{ post.title }}</h2>
       <p>{{ post.description }}</p>
       <img src="http://127.0.0.1:8000/media/{{ post.image }}" />
-      {% if request.user %}
+      {% if request.user == post.user %}
       <div>
         <a href="{% url 'ticket_update' post.id %}" class="button">
           Modifier
@@ -67,13 +68,12 @@
       </div>
       {% endif %}
       <div>
-        <a class="button" href="{% url 'review_create' %}"
+        <a class="button" href="{% url 'review_create' post.id %}"
           >Créer une critique</a
         >
       </div>
     </article>
     {% endif %}
-    <!---->
     {% endfor %}
   </section>
 </main>

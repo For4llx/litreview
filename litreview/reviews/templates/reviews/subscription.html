@@ -3,8 +3,9 @@
   <section>
     <h2>Suivre d'autres utilisateurs</h2>
     <form method="post">
-      <input placeholder="Nom d'utilisateur" />
-      <button class="button">Ajouter</button>
+      {% csrf_token %}
+      {{ search_user_form.as_p }}
+      <button class="button" type="submit">Ajouter</button>
     </form>
   </section>
   <section>
@@ -15,7 +16,7 @@
       <li>
         <div>
           <p>{{ subscription.followed_user }}</p>
-          <button class="button">Se Désabonner</button>
+          <a href="{% url 'subscription_delete' subscription.id %}" class="button">Se Désabonner</a>
         </div>
       </li>
       {% endfor %}
