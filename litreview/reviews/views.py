@@ -10,11 +10,12 @@ from authentification.models import User
 now = datetime.now()
 current_time = now.strftime("%H:%M, %d %m %y")
 
+
 @login_required
 def feed(request):
     """display all posts"""
-    tickets = Ticket.objects.all() # pylint: disable=maybe-no-member
-    reviews = Review.objects.all() # pylint: disable=maybe-no-member
+    tickets = Ticket.objects.all()
+    reviews = Review.objects.all()
     posts = sorted(
         chain(tickets, reviews),
         key=lambda instance: instance.time_created,
@@ -23,10 +24,11 @@ def feed(request):
     context = {'posts': posts}
     return render(request, 'reviews/feed.html', context)
 
+
 def post(request):
     """display all posts of a user"""
-    tickets = Ticket.objects.filter(user = request.user) # pylint: disable=maybe-no-member
-    reviews = Review.objects.filter(user = request.user) # pylint: disable=maybe-no-member
+    tickets = Ticket.objects.filter(user=request.user)
+    reviews = Review.objects.filter(user=request.user)
     posts = sorted(
         chain(tickets, reviews),
         key=lambda instance: instance.time_created,
@@ -35,17 +37,23 @@ def post(request):
     context = {'posts': posts}
     return render(request, 'reviews/post.html', context)
 
+
 @login_required
 def subscription(request):
-    """Display all subscribers and all subscriptions of a user on a GET method."""
+    """
+    Display all subscribers and all subscriptions
+    of a user on a GET method.
+    """
     search_user_form = SearchUserForm()
-    subscriptions = UserFollows.objects.filter(user = request.user) # pylint: disable=maybe-no-member
-    subscribers = UserFollows.objects.filter(followed_user = request.user) # pylint: disable=maybe-no-member
+    subscriptions = UserFollows.objects.filter(user=request.user)
+    subscribers = UserFollows.objects.filter(followed_user=request.user)
 
     if request.method == 'POST':
         search = request.POST['user']
-        followed_user = User.objects.get(username = search)
-        new_subscription = UserFollows(user = request.user, followed_user = followed_user)
+        followed_user = User.objects.get(username=search)
+        new_subscription = UserFollows(
+            user=request.user,
+            followed_user=followed_user)
         new_subscription.save()
         redirect('subscription')
 
@@ -56,14 +64,16 @@ def subscription(request):
     }
     return render(request, 'reviews/subscription.html', context)
 
+
 @login_required
 def subscription_delete(request, id):
-    subscription = UserFollows.objects.get(id=id) # pylint: disable=maybe-no-member
+    subscription = UserFollows.objects.get(id=id)
     if request.method == 'POST':
         subscription.delete()
         return redirect('subscription')
     context = {'subscription': subscription}
     return render(request, 'reviews/subscription_delete.html', context)
+
 
 @login_required
 def ticket_create(request):
@@ -83,10 +93,11 @@ def ticket_create(request):
     }
     return render(request, 'reviews/ticket_create.html', context)
 
+
 @login_required
 def ticket_update(request, id):
     """Update a ticket"""
-    ticket = Ticket.objects.get(id=id) # pylint: disable=maybe-no-member
+    ticket = Ticket.objects.get(id=id)
     if request.method == 'POST':
         ticket_form = TicketForm(request.POST, instance=ticket)
         if ticket_form.is_valid():
@@ -99,19 +110,21 @@ def ticket_update(request, id):
     }
     return render(request, 'reviews/ticket_update.html', context)
 
+
 @login_required
 def ticket_delete(request, id):
-    ticket = Ticket.objects.get(id=id) # pylint: disable=maybe-no-member
+    ticket = Ticket.objects.get(id=id)
     if request.method == 'POST':
         ticket.delete()
         return redirect('feed')
     context = {'ticket': ticket}
     return render(request, 'reviews/ticket_delete.html', context)
 
+
 @login_required
 def review_create(request, id=None):
     if id:
-        ticket = Ticket.objects.get(id=id) # pylint: disable=maybe-no-member
+        ticket = Ticket.objects.get(id=id)
         review_form = ReviewForm()
         if request.method == 'POST':
             review_form = ReviewForm(request.POST)
@@ -151,9 +164,10 @@ def review_create(request, id=None):
         }
     return render(request, 'reviews/review_create.html', context)
 
+
 @login_required
 def review_update(request, id):
-    review = Review.objects.get(id=id) # pylint: disable=maybe-no-member
+    review = Review.objects.get(id=id)
     if request.method == 'POST':
         review_form = ReviewForm(request.POST, instance=review)
         if review_form.is_valid():
@@ -166,9 +180,10 @@ def review_update(request, id):
     }
     return render(request, 'reviews/review_update.html', context)
 
+
 @login_required
 def review_delete(request, id):
-    review = Review.objects.get(id=id) # pylint: disable=maybe-no-member
+    review = Review.objects.get(id=id)
     if request.method == 'POST':
         review.delete()
         return redirect('feed')

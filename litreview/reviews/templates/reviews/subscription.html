@@ -1,21 +1,21 @@
 {% extends 'base.html' %} {% block content %}
 <main class="subscription">
-  <section>
+  <section class="subscription__section-1">
     <h2>Suivre d'autres utilisateurs</h2>
-    <form method="post">
+    <form class="search" method="post">
       {% csrf_token %}
       {{ search_user_form.as_p }}
       <button class="button" type="submit">Ajouter</button>
     </form>
   </section>
-  <section>
+  <section class="subscription__section-2">
     <h2>Abonnements</h2>
     {% if request.user %}
     <ul>
       {% for subscription in subscriptions %}
       <li>
-        <div>
-          <p>{{ subscription.followed_user }}</p>
+        <div class="subscription__container-1">
+          <p class="subscription__user">{{ subscription.followed_user }}</p>
           <a href="{% url 'subscription_delete' subscription.id %}" class="button">Se Désabonner</a>
         </div>
       </li>
@@ -25,13 +25,13 @@
     <p>Vous n'avez pas encore d'abonnements</p>
     {% endif %}
   </section>
-  <section>
+  <section class="subscription__section-2">
     <h2>Abonnés</h2>
     {% if request.user %}
     <ul>
       {% for subscriber in subscribers %}
       <li>
-        <p>{{ subscriber.user }}</p>
+        <p class="subscription__user">{{ subscriber.user }}</p>
       </li>
       {% endfor %}
     </ul>

@@ -1,28 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
+<main class="create">
 {% if ticket %}
 <article>
-      <div>
-        {% if request.user %}
-        <p>Vous avez publié une critique</p>
-        {% else %}
-        <p>{{ ticket.user }} a publié une critique</p>
-        {% endif %}
-        <p>{{ ticket.time_created }}</p>
-      </div>
-      <div>
-        <p>Ticket - {{ ticket.user }}</p>
-        <h2>{{ ticket.title }}</h2>
-        <img src="http://127.0.0.1:8000/media/{{ ticket.image }}" />
-      </div>
-    </article>
+  <div>
+    {% if request.user %}
+    <p>Vous avez publié une critique</p>
+    {% else %}
+    <p>{{ ticket.user }} a publié une critique</p>
+    {% endif %}
+    <p>{{ ticket.time_created }}</p>
+  </div>
+  <div>
+    <p>Ticket - {{ ticket.user }}</p>
+    <h2>{{ ticket.title }}</h2>
+    <img src="http://127.0.0.1:8000/media/{{ ticket.image }}" />
+  </div>
+</article>
 {% endif %}
-<form method="post" enctype="multipart/form-data">
+<form class="form-create" method="post" enctype="multipart/form-data">
   {% if ticket_form %}
-  {{ ticket_form.as_p }}
+  {{ ticket_form }}
   {% endif %}
-  {{ review_form.as_p }}
+  {{ review_form }}
   {% csrf_token %}
-  <button type="submit">Envoyer</button>
+  <button class="button button--right" type="submit">Envoyer</button>
 </form>
 {% endblock content %}
+</main>

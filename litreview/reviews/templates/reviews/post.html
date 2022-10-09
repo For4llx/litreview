@@ -1,11 +1,12 @@
-{% extends 'base.html' %} {% load review_extras %} {% block content %}
+{% extends 'base.html' %}
+{% load review_extras %}
+{% block content %}
 <main class="feed">
-  <section>
+  <section class="posts">
     {% for post in posts %}
-    <!---->
     {% if post|model_type == 'Review' %}
-    <article>
-      <div>
+    <article class="post">
+      <div class="post__container-1">
         {% if request.user %}
         <p>Vous avez publié une critique</p>
         {% else %}
@@ -13,18 +14,16 @@
         {% endif %}
         <p>{{ post.time_created }}</p>
       </div>
-      <span>
-        <h2>{{ post.headline }}</h2>
-        -
-        <p>Note: {{ post.rating }}</p>
-      </span>
+      <div class="post__container-2">
+        <h2>{{ post.headline }}</h2> - <p>Note: {{ post.rating }}</p>
+      </div>
       <p>{{ post.body }}</p>
-      <div>
+      <div class="post__ticket">
         <p>Ticket - {{ post.ticket.user }}</p>
         <h2>{{ post.ticket.title }}</h2>
         <img src="http://127.0.0.1:8000/media/{{ post.ticket.image }}" />
       </div>
-      <div>
+      <div class="post__container-3">
         <a href="{% url 'review_update' post.id %}" class="button">
           Modifier
         </a>
@@ -34,8 +33,8 @@
       </div>
     </article>
     {% elif post|model_type == 'Ticket' %}
-    <article>
-      <div>
+    <article class="post">
+      <div class="post__container-1">
         {% if request.user %}
         <p>Vous avez demandé une critique</p>
         {% else %}
@@ -46,24 +45,21 @@
       <h2>{{ post.title }}</h2>
       <p>{{ post.description }}</p>
       <img src="http://127.0.0.1:8000/media/{{ post.image }}" />
-      {% if request.user %}
-      <div>
+      <div class="post__container-3">
+        {% if request.user %}
         <a href="{% url 'ticket_update' post.id %}" class="button">
           Modifier
         </a>
         <a href="{% url 'ticket_delete' post.id %}" class="button">
           Supprimer
         </a>
-      </div>
-      {% endif %}
-      <div>
+        {% endif %}
         <a class="button" href="{% url 'review_create' %}"
           >Créer une critique</a
         >
       </div>
     </article>
     {% endif %}
-    <!---->
     {% endfor %}
   </section>
 </main>

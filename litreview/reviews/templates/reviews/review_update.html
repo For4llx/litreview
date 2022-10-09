@@ -1,6 +1,8 @@
 {% extends 'base.html' %} {% block content %}
-<form method="post" enctype="multipart/form-data">
-  {{ review_form.as_p }} {% csrf_token %}
-  <button type="submit">Envoyer</button>
-</form>
+<main class="create">
+  <form method="post" enctype="multipart/form-data">
+    {{ review_form.as_p }} {% csrf_token %}
+    <button type="submit">Envoyer</button>
+  </form>
+</main>
 {% endblock content %}

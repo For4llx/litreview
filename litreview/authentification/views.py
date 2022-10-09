@@ -22,8 +22,8 @@ class LoginPage(View):
         message = ''
         if form.is_valid():
             user = authenticate(
-                username= form.cleaned_data['username'],
-                password= form.cleaned_data['password'])
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password'])
             if user:
                 login(request, user)
                 return redirect('feed')
@@ -32,6 +32,7 @@ class LoginPage(View):
         return render(
             request, self.template_name,
             context={'form': form, 'message': message})
+
 
 def logout_user(request):
     logout(request)
@@ -47,4 +48,7 @@ def signup_page(request):
             # auto-login user
             login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
-    return render(request, 'authentification/signup.html', context={'form': form})
+    return render(
+        request,
+        'authentification/signup.html',
+        context={'form': form})
