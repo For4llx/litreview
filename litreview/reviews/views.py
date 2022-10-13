@@ -176,6 +176,7 @@ def review_update(request, id):
     else:
         review_form = ReviewForm(instance=review)
     context = {
+        'review': review,
         'review_form': review_form
     }
     return render(request, 'reviews/review_update.html', context)

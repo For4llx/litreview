@@ -1,8 +1,13 @@
 {% extends 'base.html' %} {% block content %}
 <main class="create">
-  <form method="post" enctype="multipart/form-data">
-    {{ review_form.as_p }} {% csrf_token %}
-    <button type="submit">Envoyer</button>
+  <div>
+    <p>Ticket - {{ review.ticket.user }}</p>
+    <h2>{{ review.ticket.title }}</h2>
+    <img src="http://127.0.0.1:8000/media/{{ review.ticket.image }}" />
+  </div>
+  <form class="form-create" method="post" enctype="multipart/form-data">
+    {{ review_form }} {% csrf_token %}
+    <button class="button button--right" type="submit">Envoyer</button>
   </form>
 </main>
 {% endblock content %}
