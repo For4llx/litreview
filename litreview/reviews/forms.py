@@ -20,6 +20,7 @@ class ReviewForm(forms.ModelForm):
             'headline': 'Titre',
             'rating': 'Note',
             'body': 'Commentaire'}
+        widgets = {'rating': forms.RadioSelect(attrs={'class': 'form__select'})}
 
 
 class SearchUserForm(forms.Form):

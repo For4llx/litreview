@@ -216,3 +216,14 @@ input {
 .button--right {
   align-self: flex-end ;
 }
+
+.form__select {
+  display: flex;
+  justify-content: space-around;
+}
+
+.unchecked {
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: black;
+  color: transparent;
+}
