@@ -13,7 +13,9 @@
     </li>
   </ul>
   <section class="posts">
+    {% for subscription in subscriptions %}
     {% for post in posts %}
+    {% if subscription.followed_user == post.user %}
     {% if post|model_type == 'Review' %}
     <article class="post">
       <div class="post__container-1">
@@ -111,7 +113,10 @@
       </div>  
     </article>
     {% endif %}
+    {% endif %}
     {% endfor %}
+    {% endfor %}
+
   </section>
 </main>
 {% endblock content %}

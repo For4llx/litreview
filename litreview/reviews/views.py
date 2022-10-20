@@ -16,15 +16,20 @@ def feed(request):
     """display all posts"""
     tickets = Ticket.objects.all()
     reviews = Review.objects.all()
+    subscriptions = UserFollows.objects.filter(user=request.user)
     posts = sorted(
         chain(tickets, reviews),
         key=lambda instance: instance.time_created,
         reverse=True
     )
-    context = {'posts': posts}
+    context = {
+        'posts': posts,
+        'subscriptions': subscriptions
+    }
     return render(request, 'reviews/feed.html', context)
 
 
+@login_required
 def post(request):
     """display all posts of a user"""
     tickets = Ticket.objects.filter(user=request.user)
@@ -99,7 +104,7 @@ def ticket_update(request, id):
     """Update a ticket"""
     ticket = Ticket.objects.get(id=id)
     if request.method == 'POST':
-        ticket_form = TicketForm(request.POST, instance=ticket)
+        ticket_form = TicketForm(request.POST, request.FILES, instance=ticket)
         if ticket_form.is_valid():
             ticket_form.save()
             return redirect('feed')
@@ -169,7 +174,7 @@ def review_create(request, id=None):
 def review_update(request, id):
     review = Review.objects.get(id=id)
     if request.method == 'POST':
-        review_form = ReviewForm(request.POST, instance=review)
+        review_form = ReviewForm(request.POST, request.FILES, instance=review)
         if review_form.is_valid():
             review_form.save()
             return redirect('feed')
